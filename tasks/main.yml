@@ -3,7 +3,7 @@
   yum:
     name: mariadb-server
   notify:
-    - Ensure mariadb started
+    - Ensure mariadb restarted
 
 - name: Ensure configure files exists
   template:
@@ -23,11 +23,11 @@
     - dest: /etc/my.cnf.d/mysql-clients.cnf
     - dest: /etc/my.cnf.d/server.cnf
   notify:
-    - Ensure mariadb started
+    - Ensure mariadb restarted
 
 - name: Ensure service enabled
   systemd:
     name: mariadb.service
     enabled: yes
   notify:
-    - Ensure mariadb started
+    - Ensure mariadb restarted
