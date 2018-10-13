@@ -1,4 +1,4 @@
-ansible-roke-mariadb
+ansible-role-mariadb
 ====================
 
 ansible role to change mariadb setting.
