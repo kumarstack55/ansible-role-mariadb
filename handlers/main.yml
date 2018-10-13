@@ -1,0 +1,6 @@
+---
+- name: Ensure mariadb started
+  systemd:
+    name: mariadb.service
+    enabled: yes
+    state: started

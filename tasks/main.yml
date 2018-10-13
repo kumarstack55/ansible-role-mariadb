@@ -1,0 +1,33 @@
+---
+- name: Ensure packages installed
+  yum:
+    name: mariadb-server
+  notify:
+    - Ensure mariadb started
+
+- name: Ensure configure files exists
+  template:
+    dest: "{{ item.dest }}"
+    src: "{{
+        item.src
+        | default(
+          item.dest
+          | regex_replace('/\\.', '/dot.')
+          | regex_replace('^/', '')) + '.j2'
+      }}"
+    force: yes
+    backup: yes
+  loop:
+    - dest: /etc/my.cnf
+    - dest: /etc/my.cnf.d/client.cnf
+    - dest: /etc/my.cnf.d/mysql-clients.cnf
+    - dest: /etc/my.cnf.d/server.cnf
+  notify:
+    - Ensure mariadb started
+
+- name: Ensure service enabled
+  systemd:
+    name: mariadb.service
+    enabled: yes
+  notify:
+    - Ensure mariadb started
